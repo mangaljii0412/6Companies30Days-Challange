@@ -1,0 +1,25 @@
+class Solution {
+public:
+
+    bool find(string s,unordered_map<string,int>&dict,unordered_map<string,bool>&dp){
+        if(s.size() == 0) return true;
+
+        if(dp.find(s) != dp.end()) return dp[s];
+        for(int i = 0 ; i < s.length(); i++){
+            string sub = s.substr(0,i+1);
+            if(dict.find(sub)!=dict.end()) {
+                if(find(s.substr(i+1),dict,dp)) return dp[s] = true;
+            }
+        }
+        return dp[s] = false;
+    }
+    bool wordBreak(string s, vector<string>& wordDict) {
+        unordered_map<string,bool>dp;
+        unordered_map<string,int> dict;
+
+        for(auto it : wordDict){
+            dict[it]++;
+        }
+        return find(s,dict,dp);
+    }
+};
