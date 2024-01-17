@@ -1,0 +1,25 @@
+class Solution {
+public:
+
+    static bool cmp(pair<char,int> &p1 , pair<char,int> &p2){
+        if(p1.second > p2.second) return true;
+        return false;
+    }
+    string frequencySort(string s) {
+        unordered_map<char,int> mp;
+        for(auto it : s) mp[it]++;
+
+        vector<pair<char,int>> temp;
+        for(auto it:mp) temp.push_back({it.first , it.second});
+
+        sort(temp.begin(),temp.end(),cmp);
+
+        string ans = "";
+        for(auto it : temp) {
+            int num = it.second;
+            while(num--)
+            ans += it.first;
+        }
+        return ans;
+    }
+};
