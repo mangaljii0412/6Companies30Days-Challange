@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int solve(string& s, unordered_map<string, int>&dict , vector<int> &dp , int index)
+    {
+        if (index >= s.size()) return 0;
+
+        if(dp[index] != -1) return dp[index];
+        
+        string temp = "";
+        int mini = INT_MAX;
+        for(int i = index; i < s.size(); i++)
+        {
+            temp += s[i];
+            int v = temp.size();
+            if(dict.find(temp) != dict.end()) v = 0;
+
+            mini = min(mini , v + solve(s , dict , dp , i+1));
+        }
+        return dp[index] = mini;
+    }
+    int minExtraChar(string s, vector<string>& dictionary) 
+    {
+        unordered_map<string,int>dict;
+        for (string& word : dictionary) dict[word]++;
+        int n = s.size();
+        vector<int> dp(n+1,-1);
+        int ans = solve(s , dict , dp , 0);
+        return ans;
+    }
+};
